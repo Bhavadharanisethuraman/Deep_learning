@@ -10,8 +10,7 @@ import matplotlib.pyplot as plt
 # Load the trained model
 model = tf.keras.models.load_model('deep_neural_network_model.keras')
 
-# Load and preprocess the dataset
-df = pd.read_csv('/content/drive/MyDrive/Colab Notebooks/differentiated+thyroid+cancer+recurrence.zip')
+# Load and preprocess the dat
 
 # Encode categorical variables
 label_encoders = {}
