@@ -8,13 +8,20 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
 # Load the trained model
-
 model = tf.keras.models.load_model('deep_neural_network_model.keras')
 
-# Load and preprocess the dat
+# Load and preprocess the data
+data_path = "differentiated+thyroid+cancer+recurrence.zip"  # Replace with your dataset's path
+df = pd.read_csv(data_path)
+
+# Assuming 'Recurred' is the target variable and the rest are features
+X = df.drop(columns=['Recurred'])
+y = df['Recurred']
 
 # Encode categorical variables
-
+le = LabelEncoder()
+for col in X.select_dtypes(include=['object']).columns:
+    X[col] = le.fit_transform(X[col])
 
 # Standardize features
 scaler = StandardScaler()
@@ -40,7 +47,6 @@ st.write(input_data)
 # Scale the input data
 input_data_scaled = scaler.transform(input_data)
 
-
 # Make prediction
 prediction = model.predict(input_data_scaled)
 predicted_class = (prediction > 0.5).astype(int)
@@ -64,10 +70,6 @@ st.write(cm)
 st.write('Classification Report:')
 report = classification_report(y_test, y_pred_classes, output_dict=True)
 st.write(pd.DataFrame(report).transpose())
-
-
-
-
 
 # Display accuracy
 accuracy = accuracy_score(y_test, y_pred_classes)
