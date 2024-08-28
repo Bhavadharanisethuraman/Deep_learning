@@ -17,8 +17,8 @@ model = tf.keras.models.load_model('deep_neural_network_model.keras')
 
 
 # Standardize features
-#scaler = StandardScaler()
-#X_scaled = scaler.fit_transform(X)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
 
 # Streamlit App
 st.title('Deep Neural Network Classifier for Thyroid Cancer Recurrence')
