@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
 # Load the trained model
+
 model = tf.keras.models.load_model('deep_neural_network_model.keras')
 
 # Load and preprocess the dat
@@ -16,8 +17,8 @@ model = tf.keras.models.load_model('deep_neural_network_model.keras')
 
 
 # Standardize features
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+#scaler = StandardScaler()
+#X_scaled = scaler.fit_transform(X)
 
 # Streamlit App
 st.title('Deep Neural Network Classifier for Thyroid Cancer Recurrence')
@@ -49,7 +50,7 @@ st.write('Predicted Probability:', prediction[0][0])
 st.write('Predicted Class:', 'Positive' if predicted_class[0][0] == 1 else 'Negative')
 
 # Evaluate the model on test data
-st.subheader('Model Evaluation')
+'''st.subheader('Model Evaluation')
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 y_pred = model.predict(X_test)
 y_pred_classes = (y_pred > 0.5).astype(int)
@@ -70,4 +71,4 @@ st.write(pd.DataFrame(report).transpose())
 
 # Display accuracy
 accuracy = accuracy_score(y_test, y_pred_classes)
-st.write(f'Accuracy: {accuracy}')
+st.write(f'Accuracy: {accuracy}')'''
