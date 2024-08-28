@@ -13,15 +13,7 @@ model = tf.keras.models.load_model('deep_neural_network_model.keras')
 # Load and preprocess the dat
 
 # Encode categorical variables
-label_encoders = {}
-for column in df.select_dtypes(include=['object']).columns:
-    le = LabelEncoder()
-    df[column] = le.fit_transform(df[column])
-    label_encoders[column] = le
 
-# Split features and target
-X = df.drop('Recurred', axis=1)  # Replace 'Recurred' with your target column name
-y = df['Recurred']  # Replace 'Recurred' with your target column name
 
 # Standardize features
 scaler = StandardScaler()
@@ -46,8 +38,7 @@ st.write(input_data)
 
 # Scale the input data
 input_data_scaled = scaler.transform(input_data)
-st.subheader('Scaled Input Data')
-st.write(input_data_scaled)
+
 
 # Make prediction
 prediction = model.predict(input_data_scaled)
@@ -73,32 +64,9 @@ st.write('Classification Report:')
 report = classification_report(y_test, y_pred_classes, output_dict=True)
 st.write(pd.DataFrame(report).transpose())
 
-# ROC Curve
-st.subheader('ROC Curve')
-fpr, tpr, thresholds = roc_curve(y_test, y_pred)
-roc_auc = auc(fpr, tpr)
-plt.figure()
-plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (area = {roc_auc:.2f})')
-plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-plt.xlim([0.0, 1.0])
-plt.ylim([0.0, 1.0])
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('Receiver Operating Characteristic')
-plt.legend(loc='lower right')
-st.pyplot(plt)
 
-# Precision-Recall Curve
-st.subheader('Precision-Recall Curve')
-precision, recall, _ = precision_recall_curve(y_test, y_pred)
-average_precision = average_precision_score(y_test, y_pred)
-plt.figure()
-plt.plot(recall, precision, lw=2, label=f'Average precision = {average_precision:.2f}')
-plt.xlabel('Recall')
-plt.ylabel('Precision')
-plt.title('Precision-Recall Curve')
-plt.legend(loc='lower left')
-st.pyplot(plt)
+
+
 
 # Display accuracy
 accuracy = accuracy_score(y_test, y_pred_classes)
